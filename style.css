@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+  }
+  canvas {
+    display: block;
+  }
+
+  #plotTitle{
+    position: absolute;
+    text-align:center;
+    width:100%;
+    color:white;
+    background: rgba(0, 0, 0, 0.357);
+    font-size:40px;
+  }
+
+  #infoBox {
+    position: absolute;
+    margin-top:50px;
+    margin-left:20px;
+    display: none;
+    background: rgba(0, 0, 0, 0.357);
+    padding: 10px;
+    border: 1px solid black;
+    pointer-events: none; /* Ensure the box doesn't interfere with mouse events */
+    width:400px;
+  }
+
+
+  #postTitle{
+    font-size:30px;
+    color: white;
+  }
+
+  #summary{
+    color:white;
+    margin-top:10px;
+    font-size:18px;
+  }
+
