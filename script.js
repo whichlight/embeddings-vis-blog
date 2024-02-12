@@ -99,6 +99,12 @@ function onMouseMove(event) {
 window.addEventListener("mousemove", onMouseMove, false);
 window.addEventListener("click", onMouseClick, false);
 
+document.addEventListener("DOMContentLoaded", function () {
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    alert("For the best experience, please open this app on a desktop device.");
+  }
+});
 // Initialize
 initScatterPlot();
 animate();
