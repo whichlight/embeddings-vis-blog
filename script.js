@@ -9,6 +9,14 @@ const camera = new THREE.PerspectiveCamera(
 
 camera.position.set(0, 0, 400); // Adjust z to ensure the data fits in view
 
+const categoryColors = {
+  "Innovative Web Technologies": 0xff0000, // Red
+  "Digital Design and Creativity": 0x00ff00, // Green
+  "Content Strategy and Management": 0x0000ff, // Blue
+  "Tech Solutions for Social Good": 0x00ffff, // Cyan
+  "Workplace Innovation and Culture": 0xff00ff, // Magenta
+};
+
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -21,6 +29,8 @@ const mouse = new THREE.Vector2();
 const infoBox = document.getElementById("infoBox");
 const titleBox = document.getElementById("postTitle");
 const summaryBox = document.getElementById("summary");
+const categoryBox = document.getElementById("category");
+const topicsBox = document.getElementById("topics");
 
 // Ambient light
 const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
@@ -38,7 +48,8 @@ function initScatterPlot() {
     .then((data) => {
       data.forEach((item) => {
         const geometry = new THREE.SphereGeometry(5, 32, 32); // Sphere size
-        const material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+        const materialColor = categoryColors[item.category] || 0xffffff; // Fallback color if category not found
+        const material = new THREE.MeshPhongMaterial({ color: materialColor });
         const sphere = new THREE.Mesh(geometry, material);
         sphere.position.set(item["tsne-2d-one"], item["tsne-2d-two"], 0);
 
@@ -46,6 +57,8 @@ function initScatterPlot() {
           title: item.title,
           link: item.link,
           summary: item.summaries,
+          category: item.category,
+          topics: item.topics,
         };
         scene.add(sphere);
       });
@@ -62,9 +75,14 @@ function animate() {
 
   if (intersects.length > 0) {
     let intersectedObject = intersects[0].object;
+    let topics = intersectedObject.userData.topics.join("<br>");
+    console.log(topics);
     infoBox.style.display = "block";
     titleBox.innerHTML = intersectedObject.userData.title;
     summaryBox.innerHTML = intersectedObject.userData.summary;
+    categoryBox.innerHTML = intersectedObject.userData.category;
+    topicsBox.innerHTML = topics;
+    console.log(intersectedObject);
   } else {
     infoBox.style.display = "none";
   }
